@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export type PokemonType = {
+export type PokemonItemType = {
   name: string;
   url: string;
 };
 
 type PokemonListState = {
-  results: PokemonType[];
+  results: PokemonItemType[];
   loading: boolean;
   error: string | null;
 };
@@ -24,7 +24,7 @@ export const fetchPokemonList = createAsyncThunk(
       `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`
     );
     const data = await res.json();
-    return data.results as PokemonType[];
+    return data.results as PokemonItemType[];
   }
 );
 
