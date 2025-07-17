@@ -4,8 +4,17 @@ export const StyledPokemonCard = styled.li`
   margin: 1rem;
   padding: 1rem;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 12px;
   width: 200px;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+
+  &:hover {
+    border-color: #646cff;
+  }
 `;
 
 export const StyledPokemonImageContainer = styled.div`
