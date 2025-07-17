@@ -6,6 +6,15 @@ import { fetchPokemon } from "../../features/pokemon/pokemonSlice";
 import { type PokemonItemType } from "../../features/pokemon/pokemonListSlice";
 import type { RootState, AppDispatch } from "../../app/store";
 
+import {
+  StyledPokemonCard,
+  StyledPokemonName,
+  StyledPokemonWeight,
+  StyledPokemonTypes,
+  StyledPokemonType,
+  StyledPokemonImageContainer,
+} from "./PokemonCard.styled";
+
 interface PokemonCardProps {
   pokemonName: PokemonItemType["name"];
 }
@@ -20,10 +29,22 @@ const PokemonCard = ({ pokemonName }: PokemonCardProps) => {
 
   if (!pokemon) return <div>Loading {pokemonName}...</div>;
   return (
-    <li>
-      <img src={pokemon.sprites.front_default} alt={pokemon.name} />
-      <h3>{pokemon.name}</h3>
-    </li>
+    <StyledPokemonCard>
+      <StyledPokemonName>{pokemon.name}</StyledPokemonName>
+      <StyledPokemonImageContainer>
+        <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+      </StyledPokemonImageContainer>
+      {pokemon.types && (
+        <StyledPokemonTypes>
+          {pokemon.types.map((t) => (
+            <StyledPokemonType key={t.type.name}>
+              {t.type.name}
+            </StyledPokemonType>
+          ))}
+        </StyledPokemonTypes>
+      )}
+      <StyledPokemonWeight>Weight: {pokemon.weight}</StyledPokemonWeight>
+    </StyledPokemonCard>
   );
 };
 

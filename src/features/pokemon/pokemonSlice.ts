@@ -4,6 +4,7 @@ type Pokemon = {
   name: string;
   sprites: { front_default: string };
   types: { type: { name: string } }[];
+  weight: number;
 };
 
 type PokemonState = {
@@ -17,6 +18,7 @@ const initialState: PokemonState = {
   loading: false,
   error: null,
 };
+
 export const fetchPokemon = createAsyncThunk(
   "pokemon/fetchPokemon",
   async (name: string) => {

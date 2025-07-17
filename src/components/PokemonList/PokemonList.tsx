@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchPokemonList } from "../../features/pokemon/pokemonListSlice";
 import type { RootState, AppDispatch } from "../../app/store";
 
+import { StyledPokemonList } from "./PokemonList.styled";
+
 type Props = {
   children: React.ReactNode;
 };
@@ -20,5 +22,5 @@ export default function PokemonList({ children }: Props) {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
-  return <ul>{children}</ul>;
+  return <StyledPokemonList>{children}</StyledPokemonList>;
 }
