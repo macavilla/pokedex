@@ -1,20 +1,31 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPokemonList } from "./features/pokemon/pokemonListSlice";
+import type { RootState, AppDispatch } from "./app/store";
 import PokemonList from "./components/PokemonList/PokemonList";
-import PokemonCard from "./components/PokemonCard/PokemonCard";
-import "./App.css";
-import { useSelector } from "react-redux";
-import type { RootState } from "./app/store";
 
-function App() {
-  const pokemons = useSelector((state: RootState) => state.pokemonList.results);
-  return (
-    <>
-      <PokemonList>
-        {pokemons.map((p) => (
-          <PokemonCard key={p.name} pokemonName={p.name} />
-        ))}
-      </PokemonList>
-    </>
+import "./App.css";
+
+const App = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { pokemons, loading, error } = useSelector(
+    (state: RootState) => state.pokemonList
   );
-}
+
+  useEffect(() => {
+    dispatch(fetchPokemonList({ limit: 20 }));
+  }, [dispatch]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+
+  return (
+    <PokemonList.Root>
+      {pokemons?.map((pokemon) => (
+        <PokemonList.Item key={pokemon.name} pokemonName={pokemon.name} />
+      ))}
+    </PokemonList.Root>
+  );
+};
 
 export default App;

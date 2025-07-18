@@ -1,26 +1,21 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchPokemonList } from "../../features/pokemon/pokemonListSlice";
-import type { RootState, AppDispatch } from "../../app/store";
-
 import { StyledPokemonList } from "./PokemonList.styled";
+import PokemonCard, { type PokemonCardProps } from "../PokemonCard/PokemonCard";
 
-type Props = {
+type PokemonListProps = {
   children: React.ReactNode;
 };
 
-export default function PokemonList({ children }: Props) {
-  const dispatch = useDispatch<AppDispatch>();
-  const { loading, error } = useSelector(
-    (state: RootState) => state.pokemonList
-  );
+const Root = ({ children }: PokemonListProps) => (
+  <StyledPokemonList>{children}</StyledPokemonList>
+);
 
-  useEffect(() => {
-    dispatch(fetchPokemonList({ limit: 12 }));
-  }, [dispatch]);
+const Item = ({ pokemonName }: PokemonCardProps) => (
+  <PokemonCard pokemonName={pokemonName} />
+);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+const PokemonList = {
+  Root,
+  Item,
+};
 
-  return <StyledPokemonList>{children}</StyledPokemonList>;
-}
+export default PokemonList;

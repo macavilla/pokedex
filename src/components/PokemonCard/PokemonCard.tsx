@@ -15,7 +15,7 @@ import {
   StyledPokemonImageContainer,
 } from "./PokemonCard.styled";
 
-interface PokemonCardProps {
+export interface PokemonCardProps {
   pokemonName: PokemonItemType["name"];
 }
 const PokemonCard = ({ pokemonName }: PokemonCardProps) => {

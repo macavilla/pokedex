@@ -6,13 +6,13 @@ export type PokemonItemType = {
 };
 
 type PokemonListState = {
-  results: PokemonItemType[];
+  pokemons: PokemonItemType[];
   loading: boolean;
   error: string | null;
 };
 
 const initialState: PokemonListState = {
-  results: [],
+  pokemons: [],
   loading: false,
   error: null,
 };
@@ -40,7 +40,7 @@ const pokemonListSlice = createSlice({
       })
       .addCase(fetchPokemonList.fulfilled, (state, action) => {
         state.loading = false;
-        state.results = action.payload;
+        state.pokemons = action.payload;
       })
       .addCase(fetchPokemonList.rejected, (state, action) => {
         state.loading = false;
