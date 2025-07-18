@@ -9,22 +9,32 @@ type PokemonListState = {
   pokemons: PokemonItemType[];
   loading: boolean;
   error: string | null;
+  next: string | null;
+  previous: string | null;
 };
 
 const initialState: PokemonListState = {
   pokemons: [],
   loading: false,
   error: null,
+  next: null,
+  previous: null,
 };
 
 export const fetchPokemonList = createAsyncThunk(
   "pokemon/fetchList",
-  async ({ limit = 20, offset = 0 }: { limit?: number; offset?: number }) => {
-    const res = await fetch(
-      `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`
-    );
+  async (params: { limit?: number; url?: string }) => {
+    const fetchUrl =
+      params.url ||
+      `https://pokeapi.co/api/v2/pokemon?limit=${params.limit ?? 12}`;
+
+    const res = await fetch(fetchUrl);
     const data = await res.json();
-    return data.results as PokemonItemType[];
+    return data as {
+      results: PokemonItemType[];
+      next: string;
+      previous: string;
+    };
   }
 );
 
@@ -40,7 +50,9 @@ const pokemonListSlice = createSlice({
       })
       .addCase(fetchPokemonList.fulfilled, (state, action) => {
         state.loading = false;
-        state.pokemons = action.payload;
+        state.pokemons = action.payload.results;
+        state.next = action.payload.next;
+        state.previous = action.payload.previous;
       })
       .addCase(fetchPokemonList.rejected, (state, action) => {
         state.loading = false;
