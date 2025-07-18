@@ -13,9 +13,12 @@ const Item = ({ pokemonName }: PokemonCardProps) => (
   <PokemonCard pokemonName={pokemonName} />
 );
 
+const Title = () => <h1>Pokedex</h1>;
+
 const PokemonList = {
   Root,
   Item,
+  Title,
 };
 
 export default PokemonList;

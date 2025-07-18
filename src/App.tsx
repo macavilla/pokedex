@@ -22,6 +22,7 @@ const App = () => {
 
   return (
     <>
+      <PokemonList.Title />
       <PokemonList.Root>
         {pokemons?.map((pokemon) => (
           <PokemonList.Item key={pokemon.name} pokemonName={pokemon.name} />
